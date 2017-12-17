@@ -8,15 +8,18 @@
 from __future__ import print_function
 import csv
 import os
+import random
+import math
+random.seed(1337)
+
 import nltk.data
 from bs4 import BeautifulSoup
-
 
 #Specify location of timeline.htm file here
 fb_data = './Data/html/timeline.htm'
 
 
-def extract_data(input_file, output_file = "FBextract.csv"):
+def extract_data(input_file):
     """
     Extracts data from the input_file '../../timeline.htm'
     looks out <div class = "comment"> and extracts the following comment information
@@ -37,7 +40,7 @@ def extract_data(input_file, output_file = "FBextract.csv"):
 
     # Parse output string data using BeautifulSoup
     print('Extracting <div class="comment">')
-    soup = BeautifulSoup(output)
+    soup = BeautifulSoup(output, "html.parser")
     extract_div = soup.find_all("div", {"class":"comment"})
     print('Extract Complete\n')
 
@@ -58,20 +61,36 @@ def extract_data(input_file, output_file = "FBextract.csv"):
         for text in new_item:
             temp = sentence_detector.tokenize(text)
 
+            # Filter out some useless tokens
             for tokens in temp:
-                sentences.append(tokens)
+                if tokens != "!" and tokens != "?" and tokens != "'," and \
+                tokens != '"""' and tokens != "..." and tokens != "),":
+                    sentences.append(tokens)
 
     print('Parse Sentences Complete\n')
 
-    # Output the list of parsed sentences into a file
-    if not os.path.exists(output_file):
-        with open(output_file, 'w', newline='') as f:
-            writer = csv.writer(f, delimiter='\n')
-            writer.writerow(sentences)
 
-    else:
-        raise Exception("{0} already exists. Choose a different output file name to prevent overwrite of existing file".format(output_file))
+    # Split the sentences into 3 parts 60% train, 20% valid, 20% test
+    print('Shuffling sentences')
+    random.shuffle(sentences)
+    print('Shuffle complete\n')
 
+    train_list = sentences[0:math.floor(len(sentences)*0.6)]
+    valid_list = sentences[math.floor(len(sentences)*0.6):math.floor(len(sentences)*0.8)]
+    test_list = sentences[math.floor(len(sentences)*0.8):len(sentences)]
+
+    # Output the list of parsed sentences into train.txt valid.txt test.txt
+    with open("train.txt", 'w', newline='') as train:
+        for item in train_list:
+            train.write("{}\n".format(item))
+
+    with open("valid.txt", 'w', newline='') as valid:
+        for item in valid_list:
+            valid.write("{}\n".format(item))
+
+    with open("test.txt", 'w', newline='') as test:
+        for item in test_list:
+            test.write("{}\n".format(item))
 
 
 if __name__ == "__main__":

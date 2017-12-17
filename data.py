@@ -18,15 +18,20 @@ class Dictionary(object):
 
 
 class Corpus(object):
-    def __init__(self, path):
+    def __init__(self,
+                 train = "./train.txt",
+                 valid = "./valid.txt",
+                 test = "./test.txt"):
         """
-        Path is the file path to the .csv file containing:w
+        Path is the file path to the .csv file containing
         all the messages
         """
         self.dictionary = Dictionary()
-        self.train, self.valid, self.text = self.tokenize(path)
+        self.train = self.tokenize(train)
+        self.valid = self.tokenize(valid)
+        self.test = self.tokenize(test)
 
-    def tokenize(self, path)
+    def tokenize(self, path):
         """
         Tokenizes the list of strings in the csv file
         """
@@ -35,4 +40,20 @@ class Corpus(object):
         # Add words to the dictionary
         with open(path, 'r') as f:
             tokens = 0
-            f
+            for line in f:
+                words = line.split() + ['<eos>']
+                tokens += len(words)
+                for word in words:
+                    self.dictionary.add_word(word)
+
+        # Tokenize file content
+        with open(path, 'r') as f:
+            ids = torch.LongTensor(tokens)
+            token = 0
+            for line in f:
+                words = line.split() + ['<eos>']
+                for word in words:
+                    ids[token] = self.dictionary.word2idx[word]
+                    token += 1
+        return ids
+
