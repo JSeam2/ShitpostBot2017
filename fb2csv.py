@@ -79,7 +79,7 @@ def extract_data(input_file):
     valid_list = sentences[math.floor(len(sentences)*0.6):math.floor(len(sentences)*0.8)]
     test_list = sentences[math.floor(len(sentences)*0.8):len(sentences)]
 
-    # Output the list of parsed sentences into train.txt valid.txt test.txt
+    # Output the list of parsed sentences into train.txt valid.txt test.txt consolidate.txt
     with open("train.txt", 'w', newline='') as train:
         for item in train_list:
             train.write("{}\n".format(item))
@@ -91,6 +91,10 @@ def extract_data(input_file):
     with open("test.txt", 'w', newline='') as test:
         for item in test_list:
             test.write("{}\n".format(item))
+
+    with open("consolidate.txt", 'w', newline='') as consolidate:
+        for item in sentences:
+            consolidate.write("{}\n".format(item)
 
 
 if __name__ == "__main__":

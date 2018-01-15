@@ -4,3 +4,4 @@ db.sqlite3
 test.txt
 train.txt
 valid.txt
+consolidate.txt
