@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=VT323|Montserrat');
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css');
+
+html,
+body{
+  height: 100%;
+}
+
+#title{
+  color: #2E2E2E;
+  background-color: #FFFF00;
+}
+
+h1{
+  font-family: 'VT323', monospace !important;
+  text-align: center;
+}
+
+p.writeup{
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  font-size: 16px;
+  color: #FFFFFF;
+}
+
+p.output{
+  font-family: 'VT323';
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 24px;
+}
+
+#things{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

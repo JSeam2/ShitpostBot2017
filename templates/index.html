@@ -1,15 +1,36 @@
 	<!DOCTYPE html>
+	{% load staticfiles %}
 	<html>
 		<head>
 			<meta charset="UTF-8" />
-			<title>JSeam Shitpostbot 2000</title>
+			<title>Shit Post Bot</title>
+			<link rel="stylesheet" href={% static "css/style.css" %} type="text/css" media="all" />
 		</head>
-		<body>
-			<h1>Jseam's Shitpost</h1>
-			<p>I shit post alot, so why not create a bot to do this on my behalf</p>
-			<p>This bot was trained on my facebook posts the repo can be found <a href="https://github.com/JSeam2/ShitpostBot2000">here</a> </p>
-			<br>
-			<button>Generate!</button>
-			<p>{{ shitpost }}</p>
+		<body background="{% static "images/bg.jpg" %}">
+			<div class="h-100 row align-items-center">
+				<div class="container">
+					<div id="title">
+						<h1>Shit Post Bot</h1>
+					</div>
+
+					<br>
+
+					<div id="things">
+						<p class="writeup">This bot was trained on my facebook posts. The repo for this project can be found <a href="https://github.com/JSeam2/ShitpostBot2000">here</a> </p>
+						
+					</div>
+
+					<div id="things">
+						<form action="#" method = "get">
+							<input type="submit" class="btn btn-info" value="Generate" name="genbtn">
+						</form>
+					</div>
+
+					<br>
+					<div class="container" id="things">
+						<p class="output">{{ shitpost }}</p>
+					</div>
+				</div>
+			</div>
 		</body>
 	</html>

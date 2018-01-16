@@ -1,9 +1,13 @@
 import torch
 import os
 import argparse
+import string
+import random
 
-from helpers import *
-from model import *
+from django.conf import settings
+
+from .nnModel import *
+from .helpers import *
 
 def generate(decoder, prime_str="A", predict_len = 100, temperature = 0.8, cuda = False):
     hidden = decoder.init_hidden(1)
@@ -36,6 +40,14 @@ def generate(decoder, prime_str="A", predict_len = 100, temperature = 0.8, cuda 
 
     return predicted
 
+
+def generate_web():
+    rnnmodel = CharRNN(n_characters, 100, n_characters, 2)
+    save_file = os.path.join(settings.BASE_DIR, "generator", "consolidate.pt")
+    rnnmodel.load_state_dict(torch.load(save_file))
+    random_char = random.choice(string.ascii_letters)
+    return generate(rnnmodel, prime_str = random_char)
+
 # for standalone script
 
 if __name__ == '__main__':
@@ -46,6 +58,10 @@ if __name__ == '__main__':
     argparser.add_argument('-t', '--temperature', type=float, default=0.8)
     argparser.add_argument('--cuda', action='store_true')
     args = argparser.parse_args()
-    decoder = torch.load(args.filename)
+
+    rnnmodel = CharRNN(n_characters, 100, n_characters, 2)
+    save_file = args.filename
+    rnnmodel.load_state_dict(torch.load(save_file))
     del args.filename
-    print(generate(decoder, **vars(args)))
+    #decoder.eval()
+    print(generate(rnnmodel))

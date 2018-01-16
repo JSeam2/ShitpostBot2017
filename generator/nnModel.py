@@ -7,6 +7,7 @@ import torch
 import torch.nn as nn
 from torch.autograd import Variable
 
+from .helpers import *
 
 class CharRNN(nn.Module):
     """

@@ -7,7 +7,7 @@ import os
 from tqdm import tqdm
 
 from helpers import *
-from model import *
+from nnModel import *
 from generate import *
 
 argparser = argparse.ArgumentParser()
@@ -68,11 +68,11 @@ def train(inp, target):
 
     return loss.data[0] / args.chunk_len
 
-def save():
+def save(decoder):
     save_filename = os.path.splitext(os.path.basename(args.filename))[0] \
             + '.pt'
 
-    torch.save(decoder, save_filename)
+    torch.save(decoder.state_dict(), save_filename)
     print('Saved as %s' % save_filename)
 
 
@@ -108,9 +108,9 @@ try:
             print(generate(decoder, 'Wh', 100, cuda=args.cuda), '\n')
 
     print("Saving...")
-    save()
+    save(decoder)
 
 
 except KeyboardInterrupt:
     print("Saving before quit...")
-    save()
+    save(decoder)
