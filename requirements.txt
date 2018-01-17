@@ -1,0 +1,14 @@
+certifi==2017.11.5
+cffi==1.11.2
+Django==1.11.8
+nltk==3.2.5
+numpy==1.13.3
+olefile==0.44
+Pillow==4.3.0
+pycparser==2.18
+pytz==2017.3
+six==1.11.0
+torch==0.3.0.post4
+torchvision==0.2.0
+tqdm==4.19.5
+Unidecode==1.0.22
