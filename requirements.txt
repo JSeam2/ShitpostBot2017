@@ -8,7 +8,7 @@ Pillow==4.3.0
 pycparser==2.18
 pytz==2017.3
 six==1.11.0
-torch==0.3.0.post4
+git+https://github.com/pytorch/pytorch.git
 torchvision==0.2.0
 tqdm==4.19.5
 Unidecode==1.0.22

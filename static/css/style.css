@@ -24,7 +24,7 @@ p.writeup{
 }
 
 p.output{
-  font-family: 'VT323';
+  font-family: 'VT323', monospace;
   text-align: center;
   color: #FFFFFF;
   font-size: 24px;
